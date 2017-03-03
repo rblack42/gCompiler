@@ -1,7 +1,10 @@
 #include <iostream>
 
+const char name[] = "gCompiler";
+const char version[] = "v0.1";
+
 void usage( void ) {
-    std::cout << "usage: gCompiler file_name\n";
+    std::cout << "usage: " << name << " file_name\n";
 }
 
 int main( int argc, char *argv[] ) {
@@ -9,5 +12,6 @@ int main( int argc, char *argv[] ) {
             usage();
             exit(0);
         }
-        std::cout << "gCompiler (v0.1)\n";
+        std::cout << name << " " << version << "\n"
+        string file_name;
 }
