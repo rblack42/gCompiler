@@ -1,34 +1,36 @@
 # generic Makefile for COSC2325
 
 # set the executable name
-BIN     := gCompiler.exe
+BIN     := gCompiler
 TEST    := unit_test
 
-LIBS    := 
+LIBS    := math
 
-SRCDIR  :=  src
-LIBDIR  :=  lib
-TSTDIR  :=  tests
-DOCDIR  :=  docs
-OBJDIR  :=  _obj
-INCDIR  := include
+SRCDIR  :=  src/
+LIBDIR  :=  lib/
+TSTDIR  :=  tests/
+DOCDIR  :=  docs/
+OBJDIR  :=  _obj/
+INCDIR  := include/
 
 CXX     := g++
 CFLAGS  := -I $(INCDIR) -std=c++11
 LFLAGS  :=
 
-RM  :=  del
+RM      := rm -f
+PIP     := _venv/bin/pip
+VENV    := virtulenv
 
 # get a list of the app sources and the library sources
-MSRCS   := $(wildcard $(SRCDIR)/*.cpp)
-LSRCS   := $(wildcard $(LIBDIR)/*.cpp)
-ISRCS   := $(wildcard $(INCDIR)/*.h)
-TSRCS   := $(wildcard $(TSTDIR)/*.cpp)
+MSRCS   := $(wildcard $(SRCDIR)*.cpp)
+LSRCS   := $(wildcard $(LIBDIR)*.cpp)
+ISRCS   := $(wildcard $(INCDIR)*.h)
+TSRCS   := $(wildcard $(TSTDIR)*.cpp)
 
 # generate a list of all obj files to create
-MOBJS    := $(MSRCS:%.cpp=$(OBJDIR)/%.o)
-LOBJS    := $(LSRCS:%.cpp=$(OBJDIR)/%.o)
-TOBJS    := $(TSRCS:%.cpp=$(OBJDIR)/%.o)
+MOBJS    := $(MSRCS:%.cpp=$(OBJDIR)%.o)
+LOBJS    := $(LSRCS:%.cpp=$(OBJDIR)%.o)
+TOBJS    := $(TSRCS:%.cpp=$(OBJDIR)%.o)
 
 
 # denerate a list of all dependency files to create
@@ -39,15 +41,15 @@ TDEPS   := $(TOBJS:.o=.d)
 
 # primary application build rule
 .PHONY: all
-all:    $(BIN) $(TEST)
+all:    $(BIN) $(TEST) | $(OBJDIR)
 
 .PHONY: run
 run:    $(BIN)
-		$(BIN)
+		./$(BIN) -d tests/test.c
 
 .PHONY: test
 test:   $(BIN) $(TEST)
-		$(TEST)
+		./$(TEST)
 
 $(BIN): $(MOBJS) $(LOBJS)
 	$(CXX) -o $@ $^ $(LFLAGS)
@@ -55,21 +57,41 @@ $(BIN): $(MOBJS) $(LOBJS)
 $(TEST): $(TOBJS) $(LOBJS)
 	$(CXX) -o $@ $^ $(CFLAGS)
 
+# build rules for Sphnx documentation
+.PHONY: reqs
+reqs:   init _venv
+	$(PIP) install -r requirements.txt
+
+_venv:
+	$(VENV) _venv
+
+.PHONY: docs
+docs:   reqs _venv
+	sphinx-build -b html -d _build/doctrees . _build/html
+
+.PHONY: pdf
+pdf:
+	sphinx-build -b latex -d _build/doctrees . _build/latex
+	cd _build/latex && pdflatex CPUkit.tex
+
 # implicit rule to build any obj file and associated dependency file
-$(OBJDIR)/%.o: %.cpp
+$(OBJDIR)%.o: %.cpp
 	$(CXX) -c -o $@ $< $(CFLAGS) -MMD -MP
 
 # create project folders if needed
 .PHONY: init
 init:
-	mkdir  $(SRCDIR)
-	mkdir  $(LIBDIR)
-	mkdir  $(INCDIR)
-	mkdir  $(TSTDIR)
-	mkdir  $(DOCDIR)
-	mkdir  $(OBJDIR)$(SRCDIR)
-	mkdir  $(OBJDIR)$(LIBDIR)
-	mkdir  $(OBJDIR)$(TSTDIR)
+	mkdir -p $(SRCDIR)
+	mkdir -p $(LIBDIR)
+	mkdir -p $(INCDIR)
+	mkdir -p $(TSTDIR)
+	mkdir -p $(DOCDIR)
+
+# create object directories only if needed
+$(OBJDIR):
+	mkdir -p $(OBJDIR)$(SRCDIR)
+	mkdir -p $(OBJDIR)$(LIBDIR)
+	mkdir -p $(OBJDIR)$(TSTDIR)
 
 # remove all constructed files
 .PHONY: clean
@@ -91,5 +113,5 @@ debug:
 	-@echo TDEPS = $(TDEPS)
 
 # include compiler generated dependencies
--include $(OBJDIR)\*.d
+-include $(OBJDIR)*.d
 

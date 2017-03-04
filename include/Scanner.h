@@ -2,7 +2,10 @@
 
 class Scanner {
     public:
-        Scanner();
+        Scanner( bool );
         ~Scanner();
+
+    private:
+        bool debug;
 };
 
