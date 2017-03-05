@@ -65,8 +65,9 @@ int Compiler::getSize( void ) {
 bool Compiler::run( void ) {
     int i = 0;
     char ch;
-    Parser* parser = new Parser( &source_code, debug );
-    
+    Parser* parser = new Parser( source_code, debug );
+    parser->run();
+ 
     std::cout<< "Compiler succeeded" << std::endl;
     return true;
 }

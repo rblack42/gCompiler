@@ -6,6 +6,8 @@ gCompiler - a Recursive Descent Compiler Example
 :School: Austin Community College
 :Course: COSC2325 - COmputer Architecture and Machine Language
 
+..  image:: https://travis-ci.org/rblack42/gCompiler.svg?branch=master
+
 This project is a test bed for a simple recursive-descent compiler beginning
 C++ students can use to learn how to define and process a baby language. I use
 the cod ein this project as the basis for projects in my *COSC2325 - Computer

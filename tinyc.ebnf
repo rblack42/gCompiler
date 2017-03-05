@@ -1,0 +1,44 @@
+program ::= (  var_decl | func_decl | func_def )* 
+
+var_decl ::= type ident ";"
+
+func_decl ::= type ident "(" func_args ")" ";"
+
+func_def ::= type ident "(" func-args ")" func-body
+
+func-args ::= ( type ident ","  )*
+
+type ::= "int" | "char *"
+
+func-body ::= statement
+
+statement ::= block | assign | return_stmt | if_stmt | while_stmt | expr_stmt
+ 
+
+block ::= "{" ( statement )* "}"
+
+assign ::=  type ident ( "=" expr )? ";"  
+
+return_stmt ::= "return" expr ";"
+
+if_stmt ::= "if" "(" expr ")" statement ( "else" statement )?
+
+while_stmt ::=  "while" "(" expr ")" statement
+
+expr_stmt ::= expr ";"
+
+expr ::= bitwise-expr  | bitwise-expr "=" expr
+
+bitwise-expr ::= eq-expr| bitwise-expr "&" eq-expr | bitwise-expr "|" eq-expr
+
+eq-expr ::= rel-expr | eq-expr "==" rel-expr | eq-expr "!=" rel-expr
+
+rel-expr ::= shift-expr | rel-expr "<" shift-expr
+
+shift-expr ::= add-expr | shift-expr "<<" add-expr | shift-expr ">>" add-expr
+
+add-expr ::= postfix-expr  | add-expr "+" postfix-expr | add-expr  "-" postfix-expr
+
+postfix-expr ::= prim-expr   | postfix-expr  "[" expr "]"  | postfix-expr "(" expr ( "," expr )* ")"
+
+prim-expr ::= number | ident | string | "(" expr ")"

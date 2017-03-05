@@ -3,4 +3,5 @@
 *~
 *.o
 *.d
-
+_venv
+_build

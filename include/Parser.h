@@ -5,12 +5,11 @@
 
 class Parser {
     public:
-        Parser( std::string *, bool );
+        Parser( std::string const &, bool );
         ~Parser();
         bool run( void );
     private:
         bool debug;
         Lexer* lexer;
-        std::string *sourcePtr;
 };
 

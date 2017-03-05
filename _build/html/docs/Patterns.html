@@ -26,7 +26,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Compiler Class Design" href="Compiler.html" />
+    <link rel="next" title="Scanner Class Design" href="Scanner.html" />
+    <link rel="prev" title="Parser Class Design" href="Parser.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -102,7 +103,7 @@ headers. Header files are a contract between class implementers and class
 users, and should not disclose details about how the class works. That pattern
 makes it easier for the implementer to make improvements to the class, without
 breaking user code.</p>
-<p>Class constructors support a <em>debug</em> parameter, so the class can generate
+<p>All class constructors support a <em>debug</em> parameter, so the class can generate
 output as objects are created, and methods are called. At present, a global
 debug option is supported on the command line, activating the debug system in
 every class, but this may change in the future.</p>
@@ -130,7 +131,8 @@ every class, but this may change in the future.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Compiler.html" title="previous chapter">Compiler Class Design</a></li>
+      <li>Previous: <a href="Parser.html" title="previous chapter">Parser Class Design</a></li>
+      <li>Next: <a href="Scanner.html" title="next chapter">Scanner Class Design</a></li>
   </ul></li>
 </ul>
 </div>

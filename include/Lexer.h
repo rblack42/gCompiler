@@ -1,16 +1,20 @@
 #pragma once
 #include "Scanner.h"
+#include "Token.h"
 
 #include <iostream>
 
 class Lexer {
 	public:
-		Lexer( bool );
+		Lexer( std::string const &, bool );
 		~Lexer();
-        std::string getToken( void );
+        Token getToken( void );
 
     private:
         bool debug;
         Scanner* scanner;
+        char ch;
+
+        void skip( void );
 };
 
