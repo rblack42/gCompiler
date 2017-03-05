@@ -5,3 +5,4 @@
 *.d
 _venv
 _build
+_obj
